@@ -8,7 +8,7 @@ function Navbar() {
       <div className="container mx-auto">
         <div className="flex items-center justify-between">
           <Link to="/" className="text-white text-xl font-semibold">
-            Your App Name
+            EvenTick
           </Link>
           <ul className="flex space-x-4">
             <li>
@@ -23,7 +23,7 @@ function Navbar() {
             </li>
             <li>
               <Link to="/events" className="text-white">
-                Events
+                Find Events
               </Link>
             </li>
           </ul>
