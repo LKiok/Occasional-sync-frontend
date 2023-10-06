@@ -1,36 +1,35 @@
-// src/components/Navbar.js
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import "./Navbar.css";
+import { NavLink} from "react-router-dom";
 
-function Navbar() {
+export default function NavBar() {
   return (
-    <nav className="bg-blue-500 p-4">
-      <div className="container mx-auto">
-        <div className="flex items-center justify-between">
-          <Link to="/" className="text-white text-xl font-semibold">
-            EvenTick
-          </Link>
-          <ul className="flex space-x-4">
-            <li>
-              <Link to="/register" className="text-white">
-                Register
-              </Link>
-            </li>
-            <li>
-              <Link to="/login" className="text-white">
-                Login
-              </Link>
-            </li>
-            <li>
-              <Link to="/events" className="text-white">
-                Find Events
-              </Link>
-            </li>
-          </ul>
-        </div>
+    <nav className="nav-items">
+      <div className="nav-text">
+        <h1 className="text-blue">EvenTick</h1>
       </div>
+      <ul>
+        <li>
+          <NavLink exact to="/">
+            Home
+          </NavLink>
+        </li>
+        <li>
+          <NavLink exact to="/register">
+            Sign Up
+          </NavLink>
+        </li>
+        <li>
+          <NavLink exact to="/login">
+            Login
+          </NavLink>
+        </li>
+        <li>
+          <NavLink exact to="/events">
+            Find events
+          </NavLink>
+        </li>
+      </ul>
     </nav>
   );
 }
-
-export default Navbar;

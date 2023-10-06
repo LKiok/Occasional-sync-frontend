@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./UserLogin.css";
+// import Navbar from "./Navbar";
+// import Footer from "./Footer";
 
 function UserLogin() {
   const [formData, setFormData] = useState({
@@ -27,6 +29,7 @@ function UserLogin() {
 
   return (
     <div className="user-login-container">
+      {/* <Navbar /> */}
       <div className="login-box">
         <h2 className="login-title">User Login</h2>
         <form onSubmit={handleSubmit} className="login-form">
@@ -61,6 +64,7 @@ function UserLogin() {
           </button>
         </form>
       </div>
+      {/* <Footer />  */}
     </div>
   );
 }
