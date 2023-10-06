@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
-import "./EventPage.css"; 
+import "../Css/EventPage.css"; 
 // import Footer from "./Footer";
 
 const EventCard = ({
@@ -10,6 +10,7 @@ const EventCard = ({
   onToggleSelect,
   onRegister,
   onCancelRegistration,
+  onClick,
 }) => {
   const cardStyle = {
     border: isSelected ? "2px solid red" : "2px solid transparent",
@@ -189,7 +190,6 @@ const EventPage = () => {
               >
                 {isSelected ? "Cancel Registration" : "Register Now"}
               </button>
-              {/* Add more event details as needed */}
             </div>
           </div>
         )}

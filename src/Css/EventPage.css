@@ -1,6 +1,3 @@
-/* eventpage.css */
-
-/* Add styles for the search input */
 .search-input {
   background-color: #ccc;
   color: #333;
@@ -9,14 +6,12 @@
   margin-bottom: 10px;
 }
 
-/* Add styles for the event list container */
 .event-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-/* Add styles for the event card */
 .event-card {
   border: 2px solid transparent;
   border-radius: 8px;
@@ -32,7 +27,6 @@
   border: 2px solid red;
 }
 
-/* Add styles for the event details container */
 .event-details-container {
   background-color: white;
   padding: 4px;
@@ -40,7 +34,6 @@
   text-align: center;
 }
 
-/* Add styles for the register button */
 .register-button {
   background-color: blue;
   color: white;

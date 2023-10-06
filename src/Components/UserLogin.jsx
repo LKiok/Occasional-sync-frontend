@@ -1,72 +1,128 @@
 import React, { useState } from "react";
-import axios from "axios";
-import "./UserLogin.css";
-// import Navbar from "./Navbar";
-// import Footer from "./Footer";
+import { useNavigate, Link } from "react-router-dom";
+import { useFormik } from "formik";
+import "../Css/UserLogin.css";
+import SweetAlert2 from "sweetalert2";
+import Spinner from "./Spinner";
+import * as yup from "yup";
 
-function UserLogin() {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+export default function UserLogin() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+
+  const formSchema = yup.object().shape({
+    username: yup.string().required("Username is required"),
+    password: yup.string().required("Password is required"),
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema: formSchema,
+    onSubmit: async (values) => {
+      try {
+        let resp = await fetch("https://event-hub-huwl.onrender.com/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values, null, 2),
+        });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await axios.post("/login", formData);
-      console.log("Login successful", response.data);
-      // Redirect to a protected page or handle as needed
-    } catch (error) {
-      console.error("Login error", error.response.data);
-    }
-  };
+        if (resp.ok) {
+          let re = await resp.json();
+          localStorage.setItem("loginToken", re.access_token);
+          localStorage.setItem("user_id", re.user_id);
+          console.log(re);
+          setIsLoading(true);
+          setTimeout(() => {
+            setIsLoading(false);
+            SweetAlert2.fire({
+              title: "Success!",
+              text: "Log In is successful, welcome to EvenTick",
+              icon: "success",
+              confirmButtonText: "Nice",
+              confirmButtonColor: "#f1cc17",
+            });
+            navigate("/");
+          }, 2000);
+        } else {
+          let errorData = await resp.json();
+          if (resp.status === 500 || resp.status === 401) {
+            // Internal Server Error - Database error
+            setErrors("Invalid username or password.");
+          } else {
+            setErrors(errorData.message);
+          }
+        }
+      } catch (error) {
+        console.error("Network error:", error);
+      }
+    },
+  });
 
   return (
-    <div className="user-login-container">
-      {/* <Navbar /> */}
-      <div className="login-box">
-        <h2 className="login-title">User Login</h2>
-        <form onSubmit={handleSubmit} className="login-form">
-          <div className="form-field">
-            <label htmlFor="email" className="label">
-              Email
-            </label>
+    <>
+      <div className="logInBackgroundDiv">
+        <div className="logInDiv">
+          <h1>Log In</h1>
+          <form onSubmit={formik.handleSubmit} style={{ margin: "30px" }}>
+            {/* Username */}
+            <label htmlFor="username">Username</label>
+            <br />
             <input
-              type="email"
+              id="username"
+              name="username"
+              onChange={formik.handleChange}
+              value={formik.values.username}
+            />
+            {formik.touched.username && formik.errors.username ? (
+              <div style={{ color: "red" }}>{formik.errors.username}</div>
+            ) : null}
+            <br />
+
+            {/* Email */}
+            <label htmlFor="email">Email</label>
+            <br />
+            <input
+              id="email"
               name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Email"
-              className="input"
+              onChange={formik.handleChange}
+              value={formik.values.email}
             />
-          </div>
-          <div className="form-field">
-            <label htmlFor="password" className="label">
-              Password
-            </label>
+            {formik.touched.email && formik.errors.email ? (
+              <div style={{ color: "red" }}>{formik.errors.email}</div>
+            ) : null}
+            <br />
+
+            {/* Password */}
+            <label htmlFor="password">Password</label>
+            <br />
             <input
-              type="password"
+              id="password"
               name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Password"
-              className="input"
+              type="password"
+              onChange={formik.handleChange}
+              value={formik.values.password}
             />
-          </div>
-          <button type="submit" className="login-button">
-            Login
-          </button>
-        </form>
+            {formik.touched.password && formik.errors.password ? (
+              <div style={{ color: "red" }}>{formik.errors.password}</div>
+            ) : null}
+            <br />
+
+            {isLoading ? <Spinner /> : <button type="submit">Log In</button>}
+          </form>
+          {Object.keys(errors).length > 0 && (
+            <p style={{ color: "red" }}>{errors}</p>
+          )}
+          <p>
+            Don't have an account? <Link to="/register">Sign up here</Link>
+          </p>
+        </div>
       </div>
-      {/* <Footer />  */}
-    </div>
+    </>
   );
 }
-
-export default UserLogin;

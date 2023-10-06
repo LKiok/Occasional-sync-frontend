@@ -1,9 +1,11 @@
 .home-page {
   text-align: center;
+  background-color: #e7dfdfec;
 }
 
+
 .home-main {
-  background-image: url("https://i.pinimg.com/736x/9c/12/6f/9c126f5100803031a695c70a14c5932a.jpg");
+  background-image: url("https://images.unsplash.com/photo-1511578314322-379afb476865?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -13,7 +15,8 @@
 
 .home-title,
 .home-text {
-  color: white;
+  color: #F4D03F;
+  font-weight: 700;
   width: 100%;
   position: absolute;
   top: 50%;
@@ -22,8 +25,8 @@
 }
 
 .home-title {
-  font-size: 3rem;
-  font-weight: 800;
+  font-size: 7rem;
+  font-weight: 1000;
 }
 
 .home-text {
