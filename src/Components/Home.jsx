@@ -1,10 +1,12 @@
 import React from "react";
 import "./Home.css";
+import Navbar from "./Navbar";
 import Footer from "./Footer";
 
 function Home() {
   return (
     <div className="home-page">
+      <Navbar />
       <div className="home-main">
         <h1 className="home-title">EvenTick</h1>
         <p className="home-text">Experience the Magic</p>
