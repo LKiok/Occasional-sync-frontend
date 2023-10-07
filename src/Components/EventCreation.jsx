@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import "../Css/EventCreation.css";
+import * as Yup from "yup"; 
 import SweetAlert2 from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +9,31 @@ export default function EventCreation() {
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  // Custom date validation function
+  function isValidDateFormat(value) {
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    return dateRegex.test(value);
+  }
+
+  // Define the validation schema using Yup
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required("Event Name is required"),
+    date: Yup.string()
+      .required("Event Date is required")
+      .test(
+        "isValidDateFormat",
+        "Invalid date format (YYYY-MM-DD)",
+        isValidDateFormat
+      ),
+    location: Yup.string().required("Event Location is required"),
+    description: Yup.string().required("Event Description is required"),
+    capacity: Yup.number()
+      .required("Event Capacity is required (minimum 1)")
+      .min(1, "Capacity must be at least 1")
+      .integer("Capacity must be an integer"),
+    poster: Yup.string().url("Invalid URL format for Event Poster"),
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -18,21 +44,22 @@ export default function EventCreation() {
       capacity: "",
       poster: "",
     },
-    validationSchema: yourValidationSchema, // Define your validation schema here
+    validationSchema, 
     onSubmit: async (values) => {
       try {
-        // Make a POST request to your backend API to create the event
-        const response = await fetch(
-          "https://event-hub-huwl.onrender.com/",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              // Include any authentication headers you need
-            },
-            body: JSON.stringify(values),
-          }
-        );
+        // Convert the date to a string if it's a Date object
+        if (values.date instanceof Date) {
+          values.date = values.date.toISOString().split("T")[0];
+        }
+
+        const response = await fetch("http://127.0.0.1:5555/events", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // Include any authentication headers you need
+          },
+          body: JSON.stringify(values),
+        });
 
         if (response.ok) {
           const eventData = await response.json();
@@ -46,8 +73,7 @@ export default function EventCreation() {
               confirmButtonText: "OK",
               confirmButtonColor: "#f1cc17",
             });
-            // Redirect to the appropriate page after successful event creation using `navigate`
-            navigate("/events"); // Update with the actual route
+            navigate("/events"); 
           }, 2000);
         } else {
           const errorData = await response.json();
@@ -107,6 +133,7 @@ export default function EventCreation() {
           <textarea
             id="description"
             name="description"
+            className="description-textarea" // Apply the CSS class here
             onChange={formik.handleChange}
             value={formik.values.description}
           />

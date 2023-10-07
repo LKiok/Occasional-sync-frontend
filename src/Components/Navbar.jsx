@@ -25,8 +25,13 @@ export default function NavBar() {
           </NavLink>
         </li>
         <li>
-          <NavLink exact to="create-events">
+          <NavLink exact to="/create-events">
             Create Events
+          </NavLink>
+        </li>
+        <li>
+          <NavLink exact to="/login">
+            Login
           </NavLink>
         </li>
       </ul>
