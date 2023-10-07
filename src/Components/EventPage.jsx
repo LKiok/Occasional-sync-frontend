@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
-import "../Css/EventPage.css"; 
-// import Footer from "./Footer";
+import SweetAlert2 from "sweetalert2";
 
 const EventCard = ({
   event,
   isSelected,
   onToggleSelect,
   onRegister,
-  onCancelRegistration,
-  onClick,
+  onCancelRegistration
+
 }) => {
   const cardStyle = {
-    border: isSelected ? "2px solid red" : "2px solid transparent",
     borderRadius: "8px",
     margin: "10px",
     padding: "10px",
     backgroundColor: "white",
     boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
     cursor: "pointer",
-    transition: "border 0.3s ease-in-out",
   };
 
   const imageStyle = {
@@ -38,6 +35,7 @@ const EventCard = ({
     borderRadius: "4px",
     cursor: "pointer",
     marginTop: "10px",
+    border: "none",
   };
 
   return (
@@ -56,15 +54,18 @@ const EventCard = ({
         </h3>
       </div>
       <div className="event-details text-center">
-        <p className="text-black">{event.location}</p>
+        <p className="text-black">Location: {event.location}</p>
         <p className="text-yellow-500">Date: {event.date}</p>
       </div>
       <div className="event-description bg-white p-4 rounded mt-4 text-center">
-        <p className="text-gray-600">{event.description}</p>
+        <p className="text-gray-600">Descrpition: {event.description}</p>
       </div>
       <button
         style={buttonStyle}
-        onClick={isSelected ? onCancelRegistration : onRegister}
+        onClick={(e) => {
+          e.stopPropagation(); 
+          isSelected ? onCancelRegistration() : onRegister();
+        }}
       >
         {isSelected ? "Cancel Registration" : "Register Now"}
       </button>
@@ -81,7 +82,7 @@ const EventPage = () => {
   useEffect(() => {
     // Fetch events when the component mounts
     axios
-      .get("https://event-hub-huwl.onrender.com/events")
+      .get("http://127.0.0.1:5555/events")
       .then((response) => {
         setEvents(response.data.events);
       })
@@ -102,12 +103,28 @@ const EventPage = () => {
 
   const handleRegister = (id) => {
     setSelectedEvents((prevSelected) => [...prevSelected, id]);
+
+    SweetAlert2.fire({
+      title: "Success!",
+      text: "Registration successful",
+      icon: "success",
+      confirmButtonText: "OK",
+      confirmButtonColor: "#f1cc17",
+    });
   };
 
   const handleCancelRegistration = (id) => {
     setSelectedEvents((prevSelected) =>
       prevSelected.filter((eventId) => eventId !== id)
     );
+
+    SweetAlert2.fire({
+      title: "Success!",
+      text: "Registration canceled successfully",
+      icon: "success",
+      confirmButtonText: "OK",
+      confirmButtonColor: "#f1cc17",
+    });
   };
 
   const handleEventClick = (eventId) => {
@@ -126,9 +143,9 @@ const EventPage = () => {
   );
 
   const eventListStyle = {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
+    gap: "20px",
   };
 
   return (
@@ -194,7 +211,6 @@ const EventPage = () => {
           </div>
         )}
       </div>
-      {/* <Footer /> */}
     </div>
   );
 };

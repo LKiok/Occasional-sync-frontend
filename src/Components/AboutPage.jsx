@@ -27,12 +27,12 @@ export default function AboutPage() {
 
   const testimonials = [
     {
-      src: "https://tinyurl.com/ystxfs5z",
+      src: "https://plus.unsplash.com/premium_photo-1688740375397-34605b6abe48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80",
       testimonial:
         "I had a fantastic experience with this event hub. The events are engaging, and I've met wonderful people who share my love for experiences.",
     },
     {
-      src: "https://plus.unsplash.com/premium_photo-1688740375397-34605b6abe48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80",
+      src: "https://tinyurl.com/ystxfs5z",
       testimonial:
         "Joining this event hub was the best decision I made. The diverse selection of events and the sense of community are amazing!",
     },
