@@ -34,9 +34,11 @@ export default function UserLogin() {
 
         if (resp.ok) {
           let re = await resp.json();
-          localStorage.setItem("loginToken", re.access_token);
+
+          // Store the access token in localStorage
+          localStorage.setItem("accessToken", re.access_token);
           localStorage.setItem("user_id", re.user_id);
-          console.log(re);
+
           setIsLoading(true);
           setTimeout(() => {
             setIsLoading(false);
@@ -49,6 +51,7 @@ export default function UserLogin() {
             });
             navigate("/");
           }, 2000);
+
         } else {
           let errorData = await resp.json();
           if (resp.status === 500 || resp.status === 401) {

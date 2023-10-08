@@ -81,8 +81,14 @@ const EventPage = () => {
 
   useEffect(() => {
     // Fetch events when the component mounts
+    const accessToken = localStorage.getItem("accessToken");
+
     axios
-      .get("http://127.0.0.1:5555/events")
+      .get("https://event-hub-huwl.onrender.com/events", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
       .then((response) => {
         setEvents(response.data.events);
       })
