@@ -50,7 +50,7 @@ export default function UserRegistration() {
         } else {
           let errorData = await resp.json();
           if (resp.status === 500) {
-            // Internal Server Error - Database error
+
             setErrors("Internal server error. Please try again later.");
           } else if (resp.status === 400) {
             setErrors("Username or email already exists.");

@@ -31,7 +31,7 @@ export default function NavBar() {
         </li>
         <li>
           <NavLink exact to="/login">
-            Login
+            Log In
           </NavLink>
         </li>
       </ul>
