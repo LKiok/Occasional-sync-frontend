@@ -44,7 +44,7 @@ export default function EventCreation() {
       capacity: "",
       poster: "",
     },
-    validationSchema, 
+    validationSchema,
     onSubmit: async (values) => {
       try {
         // Convert the date to a string if it's a Date object
@@ -52,14 +52,21 @@ export default function EventCreation() {
           values.date = values.date.toISOString().split("T")[0];
         }
 
-        const response = await fetch("http://127.0.0.1:5555/events", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            // Include any authentication headers you need
-          },
-          body: JSON.stringify(values),
-        });
+        // Retrieve the access token from localStorage
+        const accessToken = localStorage.getItem("accessToken");
+
+        const response = await fetch(
+          "https://event-hub-huwl.onrender.com/events",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              // Include the access token in the Authorization header
+              Authorization: `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify(values),
+          }
+        );
 
         if (response.ok) {
           const eventData = await response.json();
@@ -73,7 +80,7 @@ export default function EventCreation() {
               confirmButtonText: "OK",
               confirmButtonColor: "#f1cc17",
             });
-            navigate("/events"); 
+            navigate("/events");
           }, 2000);
         } else {
           const errorData = await response.json();
@@ -133,7 +140,7 @@ export default function EventCreation() {
           <textarea
             id="description"
             name="description"
-            className="description-textarea" // Apply the CSS class here
+            className="description-textarea" 
             onChange={formik.handleChange}
             value={formik.values.description}
           />
