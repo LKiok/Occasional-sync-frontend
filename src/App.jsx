@@ -1,25 +1,25 @@
-// src/App.jsx
-import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Home from './components/Home';
-import UserRegistration from './components/UserRegistration';
-import UserLogin from './components/UserLogin';
-import EventPage from './components/EventPage'; // Use EventPage for events
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom"; // Make sure to import Routes
+import Home from "./Components/Home";
+import UserRegistration from "./Components/UserRegistration";
+import UserLogin from "./Components/UserLogin";
+import EventPage from "./Components/EventPage";
+import EventCreation  from "./Components/EventCreation";
+import AboutPage from "./Components/AboutPage";
+import "./index.css";
 
 function App() {
   return (
-    <Router>
-      <Navbar /> {/* Place your Navbar component here */}
-      <div className="container mx-auto mt-4">
-        {/* Define your routes using Route components */}
-        <Route path="/" exact component={Home} />
-        <Route path="/register" component={UserRegistration} />
-        <Route path="/login" component={UserLogin} />
-        <Route path="/events/:id?" component={EventPage} /> {/* Use EventPage for events */}
-        {/* Add more routes as needed */}
-      </div>
-    </Router>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/register" element={<UserRegistration />} />
+        <Route path="/login" element={<UserLogin />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/events" element={<EventPage />} />
+        <Route path="/create-events" element={<EventCreation />} />
+        <Route path="/about" element={<AboutPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
