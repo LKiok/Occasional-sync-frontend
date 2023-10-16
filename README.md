@@ -1,4 +1,4 @@
-this is the Backend Repository link: https://github.com/Wanjira-Faith/Occasional-sync-backend
+This is the Backend Repository link: https://github.com/Wanjira-Faith/Occasional-sync-backend
 
 ## EventHub - Event Management Application
 EventHub is a web-based event management application that allows users to create, manage, and attend events. This application is built using React for the frontend and Node.js for the backend. It provides features for user registration, event creation, event browsing, and user authentication.
